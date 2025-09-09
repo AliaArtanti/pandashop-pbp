@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-gf(pnk@b9p^r4=r2b(l2r8ciklmivi_&x@0_3dcucx7$&v416_
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["localhost", "127.0.0.1","https://pbp.cs.ui.ac.id/alia.artanti/pandashop"]
+ALLOWED_HOSTS = ["localhost", "127.0.0.1","alia-artanti-pandashop.pbp.cs.ui.ac.id"]
 
 
 # Application definition
