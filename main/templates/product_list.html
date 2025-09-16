@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8">
+  <title>Daftar Produk</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <style>
+    body{font-family:system-ui,-apple-system,Segoe UI,Robotto,Arial,sans-serif;margin:24px;line-height:1.5}
+    .btn{display:inline-block;padding:8px 12px;border:1px solid #ddd;border-radius:8px;text-decoration:none}
+    .btn:hover{background:#f6f6f6}
+    .row{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px}
+    input[type="text"]{padding:6px 8px;border:1px solid #ddd;border-radius:8px}
+    button{padding:6px 10px;border:1px solid #ddd;border-radius:8px;background:#fff;cursor:pointer}
+    button:hover{background:#f6f6f6}
+  </style>
+</head>
+<body>
+  <h1>Daftar Produk</h1>
+
+  <div class="row">
+    <a class="btn" href="{% url 'main:show_main' %}">← Back to Main Menu</a>
+    <a class="btn" href="{% url 'main:add_product' %}">+ Add Product</a>
+  </div>
+
+  <form method="get" action="{% url 'main:product_filter' %}" style="margin:8px 0 16px">
+  <input type="text" name="category" value="{{ active_category }}" placeholder="Cari kategori…">
+  <button type="submit">Filter</button>
+  {% if active_category %}
+    <a class="btn" href="{% url 'main:product_list' %}">Clear</a>
+  {% endif %}
+</form>
+
+
+  {% if active_category %}
+    <p><i>Filtered by category: <b>{{ active_category }}</b></i></p>
+  {% endif %}
+
+  <ul>
+    {% for p in products %}
+      <li>
+        <strong>{{ p.name }}</strong> — Rp{{ p.price }}
+        {% if p.is_featured %} (Featured){% endif %}
+        {% if p.category %}
+          — <a href="{% url 'main:product_filter' %}?category={{ p.category }}">#{{ p.category }}</a>
+        {% endif %}
+        [<a href="{% url 'main:product_detail' p.pk %}">Detail</a>]
+      </li>
+    {% empty %}
+      <li>Belum ada produk.</li>
+    {% endfor %}
+  </ul>
+</body>
+</html>

@@ -5,3 +5,15 @@
   <p>Dibuat oleh: {{ name }} - {{ class }}</p>
 </body>
 </html>
+<p>
+    <a href="{% url 'main:product_list' %}">Lihat Daftar Produk Disini!!!</a> |
+    <a href="{% url 'main:add_product' %}">Tambah Produk</a>
+  </p>
+
+  <p>
+    Data Delivery:
+    <a href="{% url 'main:products_json' %}">JSON</a> |
+    <a href="{% url 'main:products_xml' %}">XML</a>
+  </p>
+</body>
+</html>

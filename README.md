@@ -1,3 +1,5 @@
+TUGAS 2
+
 Jelaskan bagaimana cara kamu mengimplementasikan checklist di atas secara step-by-step.
 
 Answer : 
@@ -60,3 +62,58 @@ Answer : Dapat dikatakan django itu paket lengkap untuk pemula, karena :
 Apakah ada feedback untuk asisten dosen tutorial 1 yang telah kamu kerjakan sebelumnya?
 
 Answer : Instruksi sudah jelas dan mudah untuk dipahami.
+
+
+
+===========================================================================
+TUGAS 3
+
+
+1. Jelaskan mengapa kita memerlukan data delivery dalam pemgimplementasian sebuah platform.
+
+Answer : Data delivery merupakan cara terstruktur untuk menyalurkan data ke antar komponen (client, server dan layanan pihak ketiga) melalui interface yang konsisten, sehingga modul yang berbeda bisa tetap “berkomunikasi”  tanpa harus bergantung dengan implementasi internalnya. 
+Beberapa manfaat dari penerapan data delivery adalah arsitektur yang lebih terukur (mudah ditambahkan instance), reliable, aman dan maintenance yang mudah. Selain itu data delivery juga memungkinkan untuk sinkronisasi dalam real time agar pengalaman pengguna konsisten walaupun di perangkat yang berbeda.
+
+
+2. Menurutmu, mana yang lebih baik antara XML dan JSON? Mengapa JSON lebih populer dibandingkan XML?
+
+Answer : Menurut saya lebih baik JSON karena biasanya lebih sesuai/cocok untuk aplikasi web atau mobile karena lebih mudah dibaca manusia, lebih ringkas, langsung nyambung dengan tipe data JavaScript serta cepat dikonversi ke bahasa komputer (diparse). 
+Sementara XML lebih cocok untuk file yang jenis teksnya bercampur-campur (seperti publishing) dan mendukung skema yang besar. Di sisi lain XML cenderung terlalu banyak pengulangan kata, sehingga parsing lebih besar dan mengakibatkan sebagian besar pertukaran data lebih berfokus pada objek atau record. 
+
+3. Jelaskan fungsi dari method is_valid() pada form Django dan mengapa kita membutuhkan method tersebut?
+
+Answer : Ketika form terikat dengan request, pemanggilan is_valid() bertugas untuk menjalankan semua validasi(cek syarat, tipe data) lalu melakukan cleaning & normalisasi data. Jika memenuhi semua syarat maka akan return true tetapi jika tidak memenuhi maka akan mengisi form.errors. Langkah ini harus dilakukan agar hanya data yang benar yang dipakai untuk berbagai operasi sensitif, sehingga mencegah kerusakan data, type error dan potensi munculnya celah keamanan.
+
+
+4. Mengapa kita membutuhkan csrf_token saat membuat form di Django? Apa yang dapat terjadi jika kita tidak menambahkan csrf_token pada form Django? Bagaimana hal tersebut dapat dimanfaatkan oleh penyerang?
+
+Answer : csrf_token adalah semacam token rahasia per-request yang dimasukkan sebagai hidden field setiap ada permintaan yang mengubah sesuatu di website. Cara kerjanya adalah middleware django akan mencocokkan token di form dengan yang disimpan di sisi pengguna, sehingga hanya request yang berasal dari halaman aplikasi pengguna saja yang diterima.
+
+Jika tidak menyertakan token, django secara default akan menolak request dengan HTTP 403 Forbidden. Jika protection dimatikan atau diabaikan maka aplikasi akan menjadi rentan terhadap cyber attack (Cross-Site Request Forgery), penyerang dapat “menitipkan” form dari situs lain agar saat korban ingin login, browser korban akan melakukan  aksi yang berbahaya seperti mengubah password atau transfer data tanpa sepengetahuan korban.
+
+
+5. Jelaskan bagaimana cara kamu mengimplementasikan checklist di atas secara step-by-step (bukan hanya sekadar mengikuti tutorial).
+Answer : 
+> Pertama buat fungsi-fungsi baru di file views.py (add, delete, edit dan search produk). Setelah itu tambahkan juga fungsi JSON, XML dan yang pakai id.
+
+> Selanjutnya tambahkan url dari semua fungsi yang tadi ditambahkan di views.py
+
+> Lalu di folder templates edit file main.html, dan buat file-file baru yang mendukung semua fitur website yaitu product_form.html, product_detail.html dan product_list.html. 
+
+> Buat kode untuk menampilkan semua fitur yang diinginkan serta melengkapi design atau ui dari website tersebut.
+
+> Lakukan runserver lokal untuk memastikan bahwa semua fitur berjalan sesuai keinginan.
+
+> Mengecek link url di Postman dan screenshot semuanya, hasil screenshot tsb diupload ke google drive dan linknya ditaruh di README.md
+
+> Melakukan push ke Github terlebih dahulu baru ke PWS dengan command git add . dan git commit - m "..." (menyimpan perubahan di lokal) dilanjut dengan perintah git push origin master untuk mengirim (commit) ke repository
+
+
+6. Apakah ada feedback untuk asdos di tutorial 2 yang sudah kalian kerjakan?
+
+Answer : Tidak ada
+
+
+7. Mengakses keempat URL di poin 2 menggunakan Postman, membuat screenshot dari hasil akses URL pada Postman, dan menambahkannya ke dalam README.md.
+
+Answer : https://drive.google.com/drive/folders/1hbAbpzUaoX1nGJmczI1mgxrcHmzoEWd0
