@@ -1,19 +1,41 @@
-<title>{{ app_name }}</title>
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>{{ app_name }}</title>
 </head>
 <body>
+
+
   <h1>Selamat datang di {{ app_name }} 🐼</h1>
   <p>Dibuat oleh: {{ name }} - {{ class }}</p>
-</body>
-</html>
-<p>
-    <a href="{% url 'main:product_list' %}">Lihat Daftar Produk Disini!!!</a> |
-    <a href="{% url 'main:add_product' %}">Tambah Produk</a>
-  </p>
+  <hr>
+
+  {% if request.user.is_authenticated %}
+    <p>Halo, <b>{{ request.user.username }}</b></p>
+    {% if request.COOKIES.last_login %}
+      <p>Last login: {{ request.COOKIES.last_login }}</p>
+    {% endif %}
+
+    <p>
+      <a href="{% url 'main:product_list' %}">Produk Saya</a> |
+      <a href="{% url 'main:add_product' %}">Tambah Produk</a> |
+      <a href="{% url 'main:logout' %}">Logout</a>
+    </p>
+  {% else %}
+    <p>
+      <a href="{% url 'main:login' %}">Login</a> |
+      <a href="{% url 'main:register' %}">Register</a>
+    </p>
+  {% endif %}
 
   <p>
     Data Delivery:
     <a href="{% url 'main:products_json' %}">JSON</a> |
     <a href="{% url 'main:products_xml' %}">XML</a>
   </p>
+
+  {% block content %}{% endblock %}
+
 </body>
 </html>

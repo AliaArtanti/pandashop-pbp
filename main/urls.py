@@ -6,11 +6,18 @@ app_name = 'main'
 
 urlpatterns = [
     path('', show_main, name='show_main'),
+
+    # Login
+    path('register/', views.register, name='register'),
+    path('login/', views.login_user, name='login'),
+    path('logout/', views.logout_user, name='logout'),
+
     # XML/JSON + by id (Data delivery)
     path("products/json/", views.products_json, name="products_json"),
     path("products/xml/", views.products_xml, name="products_xml"),
     path("products/json/<int:id>/", views.product_json_by_id, name="product_json_by_id"),
     path("products/xml/<int:id>/", views.product_xml_by_id, name="product_xml_by_id"),
+    
     # Add, Edit, Delete, Search
     path("products/", views.product_list, name="product_list"),
     path("products/add/", views.add_product, name="add_product"),
