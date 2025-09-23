@@ -117,3 +117,48 @@ Answer : Tidak ada
 7. Mengakses keempat URL di poin 2 menggunakan Postman, membuat screenshot dari hasil akses URL pada Postman, dan menambahkannya ke dalam README.md.
 
 Answer : https://drive.google.com/drive/folders/1hbAbpzUaoX1nGJmczI1mgxrcHmzoEWd0
+
+
+
+===========================================================================
+TUGAS 4
+
+1. Apa itu Django AuthenticationForm? Jelaskan juga kelebihan dan kekurangannya.
+
+Answer : Sebuah form bawaan dari Django yang berfungsi untuk memverifikasi user (umumnya dengan username dan password) saat login. Kelebihan dari form ini salah satunya adalah mendukung validasi otomatis, selain itu lebih mudah dan aman untuk digunakan karena sudah terintegrasi dengan sistem authentication Django. Namun form ini memiliki kekurangan yaitu, informasi yang diperlukan untuk login sangat dasar sehingga menjadi kurang fleksibel jika memerlukan info tambahan untuk login (seperti email atau OTP) sehingga memerlukan kustomisasi.
+
+
+
+2. Apa perbedaan antara autentikasi dan otorisasi? Bagaimana Django mengimplementasikan kedua konsep tersebut?
+
+Answer : Autentikasi adalah proses memverifikasi identitas user. Di Django autentikasi diterapkan melalui sistem login dan middleware user authentication. Otorisasi adalah proses yang menentukan apa saja yang boleh dilakukan user setelah proses login/autentikasi. Dalam penerapannya menggunakan permissions,groups,decorator (@login_required atau @permission_required)
+
+
+3. Apa saja kelebihan dan kekurangan session dan cookies dalam konteks menyimpan state di aplikasi web?
+
+Answer : Cookies menyimpan data langsung di browser client sehingga lebih ringan bagi server dan data lebih tahan lama, tapi kekurangan dari cookies adalah kurang secure/aman karena rentan dimanipulasi atau dicuri. Sementara session hanya menyimpan data user di server dengan hanya menyimpan session ID di sisi client sehingga lebih fleksibel dan aman, tapi kekurangannya butuh storage lebih di server.
+
+
+4. Apakah penggunaan cookies aman secara default dalam pengembangan web, atau apakah ada risiko potensial yang harus diwaspadai? Bagaimana Django menangani hal tersebut?
+
+Answer : Secara default penggunaan cookies berisiko terhadap kejahatan siber seperti pencurian data atau man in the middle. Untuk menangani hal ini django menyediakan fitur keamanan seperti http only, secure (mengirim cookies hanya lewat https) dan CSRF protection untuk mencegah serangan. Dengan modifikasi konfigurasi yang tepat, risiko penggunaan cookies dapat diminimalisir.
+
+
+5. Jelaskan bagaimana cara kamu mengimplementasikan checklist di atas secara step-by-step (bukan hanya sekadar mengikuti tutorial).
+
+Answer : 
+> Tambahkan relasi antara owner dan products di models.py kemudian makemigrations dan migrate
+
+> Selanjutnya implementasi alur untuk autentikasi, membuat option register, login dan logout. Tambahkan juga url routingnya.
+
+> Set cookie(last_login) untuk melihat data last login dan menghapus saat logout(response.delete_cookie("last_login")).
+
+> Buat portal keamanan untuk halaman utama web beserta fitur-fiturnya dengan menambahkan @login_required(harus login terlebih dahulu baru bisa akses)
+
+> Tambahkan kode agar user hanya bisa melihat data sendiri dan produk-produknya, dan saat menyimpan product pastikan kolom owner otomastis diisi oleh user yang sedang login agar product terhubung ke user
+
+> Lalu edit main.html agar menampilkan username dari user yang sedang login dan cookie last loginnya.
+
+> Test server di lokal dengan buat 2 akun dan masing-masing diisi dengan 3 dummy product dan cek apakah setiap produk sesuai dengan ownernya (user yang sedang login).
+
+
