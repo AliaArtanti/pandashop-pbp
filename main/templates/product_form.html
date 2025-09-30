@@ -1,38 +1,24 @@
-<!doctype html>
-<html lang="id">
-<head>
-  <meta charset="utf-8">
-  <title>{{ title|default:"Form Produk" }}</title>
-  <meta name="viewport" content="width=device-width,initial-scale=1">
-  <style>
-    body{font-family:system-ui,-apple-system,Segoe UI,Robotto,Arial,sans-serif;margin:24px;line-height:1.5}
-    .nav{display:flex;gap:12px;flex-wrap:wrap;margin:12px 0 20px}
-    .btn{display:inline-block;padding:8px 12px;border:1px solid #ddd;border-radius:8px;text-decoration:none}
-    .btn:hover{background:#f6f6f6}
-    .card{border:1px solid #eee;border-radius:12px;padding:16px;margin-top:16px}
-    table{border-collapse:collapse}
-    td{padding:6px 8px;vertical-align:top}
-    input,select,textarea{padding:6px 8px;border:1px solid #ddd;border-radius:8px;width:100%}
-    input[type="checkbox"]{width:auto}
-  </style>
-</head>
-<body>
-  <div class="nav">
-    <a class="btn" href="{% url 'main:product_list' %}">← Kembali ke Daftar Produk</a>
-  </div>
+{% extends "main.html" %}
+{% block content %}
+{% include 'navbar.html' %}
 
-  <div class="card">
-    <h1>{{ title|default:"Tambah Produk" }}</h1>
+<div class="mx-auto max-w-3xl px-4 py-8">
+  <a class="inline-block border px-3 py-2 rounded-md mb-4" href="{% url 'main:product_list' %}">← Kembali ke Daftar Produk</a>
+
+  <div class="bg-white/80 border rounded-xl p-6">
+    <h1 class="text-2xl font-semibold mb-4">{{ title|default:"Tambah Produk" }}</h1>
     <form method="POST">
       {% csrf_token %}
-      <table>
+      <table class="w-full">
         {{ form.as_table }}
         <tr>
           <td></td>
-          <td><input class="btn" type="submit" value="Simpan"></td>
+          <td class="pt-3">
+            <input class="border px-4 py-2 rounded-md cursor-pointer" type="submit" value="Simpan">
+          </td>
         </tr>
       </table>
     </form>
   </div>
-</body>
-</html>
+</div>
+{% endblock %}

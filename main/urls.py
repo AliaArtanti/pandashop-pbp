@@ -5,7 +5,7 @@ from . import views
 app_name = 'main'
 
 urlpatterns = [
-    path('', show_main, name='show_main'),
+    path('', views.home_redirect, name='home'),
 
     # Login
     path('register/', views.register, name='register'),

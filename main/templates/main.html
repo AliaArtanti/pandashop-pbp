@@ -1,41 +1,34 @@
+{% load static %}
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
   <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>{{ app_name }}</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    :root{
+      --cream:#F7F3E9;
+      --green:#79B84C;
+      --cream-dim:#E8E1D3;
+    }
+    body{ background:var(--cream); }
+    .auth-input{
+      background: rgba(255,255,255,0.10);
+      border: 2px solid rgba(255,255,255,0.55);
+      color: #fff;
+    }
+    .auth-input::placeholder{ color: var(--cream-dim); opacity:1; }
+    .auth-input:focus{
+      outline:none; border-color:#fff; background:rgba(255,255,255,0.14);
+      box-shadow:0 0 0 3px rgba(255,255,255,.25);
+    }
+  </style>
+  {% block meta %}{% endblock meta %}
 </head>
-<body>
-
-
-  <h1>Selamat datang di {{ app_name }} 🐼</h1>
-  <p>Dibuat oleh: {{ name }} - {{ class }}</p>
-  <hr>
-
-  {% if request.user.is_authenticated %}
-    <p>Halo, <b>{{ request.user.username }}</b></p>
-    {% if request.COOKIES.last_login %}
-      <p>Last login: {{ request.COOKIES.last_login }}</p>
-    {% endif %}
-
-    <p>
-      <a href="{% url 'main:product_list' %}">Produk Saya</a> |
-      <a href="{% url 'main:add_product' %}">Tambah Produk</a> |
-      <a href="{% url 'main:logout' %}">Logout</a>
-    </p>
-  {% else %}
-    <p>
-      <a href="{% url 'main:login' %}">Login</a> |
-      <a href="{% url 'main:register' %}">Register</a>
-    </p>
-  {% endif %}
-
-  <p>
-    Data Delivery:
-    <a href="{% url 'main:products_json' %}">JSON</a> |
-    <a href="{% url 'main:products_xml' %}">XML</a>
-  </p>
-
-  {% block content %}{% endblock %}
-
+<body class="min-h-screen flex flex-col text-gray-900">
+  <main class="flex-1">
+    {% block content %}{% endblock content %}
+  </main>
 </body>
 </html>

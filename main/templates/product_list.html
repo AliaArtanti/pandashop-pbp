@@ -1,53 +1,82 @@
-<!doctype html>
-<html lang="id">
-<head>
-  <meta charset="utf-8">
-  <title>Daftar Produk</title>
-  <meta name="viewport" content="width=device-width,initial-scale=1">
-  <style>
-    body{font-family:system-ui,-apple-system,Segoe UI,Robotto,Arial,sans-serif;margin:24px;line-height:1.5}
-    .btn{display:inline-block;padding:8px 12px;border:1px solid #ddd;border-radius:8px;text-decoration:none}
-    .btn:hover{background:#f6f6f6}
-    .row{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px}
-    input[type="text"]{padding:6px 8px;border:1px solid #ddd;border-radius:8px}
-    button{padding:6px 10px;border:1px solid #ddd;border-radius:8px;background:#fff;cursor:pointer}
-    button:hover{background:#f6f6f6}
-  </style>
-</head>
-<body>
-  <h1>Daftar Produk</h1>
+{% extends "main.html" %}
+{% load static %}
 
-  <div class="row">
-    <a class="btn" href="{% url 'main:show_main' %}">← Back to Main Menu</a>
-    <a class="btn" href="{% url 'main:add_product' %}">+ Add Product</a>
+{% block content %}
+{% include 'navbar.html' %}
+
+<div class="mx-auto max-w-6xl px-4 py-6">
+
+  <div class="text-center text-gray-700 text-sm mb-3">
+    Data Delivery:
+    <a href="{% url 'main:products_json' %}" class="underline hover:no-underline">JSON</a> |
+    <a href="{% url 'main:products_xml' %}" class="underline hover:no-underline">XML</a>
   </div>
 
-  <form method="get" action="{% url 'main:product_filter' %}" style="margin:8px 0 16px">
-  <input type="text" name="category" value="{{ active_category }}" placeholder="Cari kategori…">
-  <button type="submit">Filter</button>
+  <!-- Filter -->
+  <form method="get" action="{% url 'main:product_filter' %}"
+        class="bg-white border rounded-lg p-4 mb-6 flex flex-col sm:flex-row gap-3 sm:items-center">
+    <input type="text" name="category" value="{{ active_category }}" placeholder="Cari kategori…"
+           class="flex-1 border rounded-md px-3 py-2">
+    <div class="flex gap-2">
+      <button type="submit" class="border px-4 py-2 rounded-md bg-white">Filter</button>
+      {% if active_category %}
+        <a href="{% url 'main:product_list' %}" class="border px-4 py-2 rounded-md bg-white">Clear</a>
+      {% endif %}
+    </div>
+  </form>
+
   {% if active_category %}
-    <a class="btn" href="{% url 'main:product_list' %}">Clear</a>
-  {% endif %}
-</form>
-
-
-  {% if active_category %}
-    <p><i>Filtered by category: <b>{{ active_category }}</b></i></p>
+    <p class="text-sm text-gray-600 mb-4"><i>Filtered by category: <b>{{ active_category }}</b></i></p>
   {% endif %}
 
-  <ul>
-    {% for p in products %}
-      <li>
-        <strong>{{ p.name }}</strong> — Rp{{ p.price }}
-        {% if p.is_featured %} (Featured){% endif %}
-        {% if p.category %}
-          — <a href="{% url 'main:product_filter' %}?category={{ p.category }}">#{{ p.category }}</a>
-        {% endif %}
-        [<a href="{% url 'main:product_detail' p.pk %}">Detail</a>]
-      </li>
-    {% empty %}
-      <li>Belum ada produk.</li>
-    {% endfor %}
-  </ul>
-</body>
-</html>
+  {% if products|length == 0 %}
+    
+    <div class="bg-white rounded-xl border p-12 text-center">
+      <div class="w-32 h-32 mx-auto mb-4">
+        <img src="{% static 'image/no-product.png' %}" alt="No products" class="w-full h-full object-contain">
+      </div>
+      <h3 class="text-lg font-medium text-gray-900 mb-2">Belum ada produk.</h3>
+      <p class="text-gray-500">Tambahkan produk pertamamu sekarang!</p>
+    </div>
+   
+    <div class="text-center mt-6">
+      <a href="{% url 'main:add_product' %}"
+         class="inline-block bg-[#79B84C] text-white px-5 py-2.5 rounded-md hover:opacity-90">
+        Tambah Produk
+      </a>
+    </div>
+  {% else %}
+    <!-- GRID CARD  -->
+    <div class="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
+      {% for p in products %}
+        <div class="border-2 border-black rounded-md overflow-hidden">
+          <a href="{% url 'main:product_detail' p.pk %}" class="block">
+            <img src="{% if p.thumbnail %}{{ p.thumbnail }}{% else %}{% static 'image/no-product.png' %}{% endif %}"
+                 alt="" class="w-full h-44 object-cover bg-white">
+          </a>
+
+          <div class="bg-white border-t-2 border-black p-3">
+            <h2 class="font-semibold text-lg text-black">{{ p.name }}</h2>
+            {% if p.description %}
+              <p class="text-sm text-black/80 mt-1">{{ p.description }}</p>
+            {% endif %}
+            <div class="mt-1 text-sm text-black">
+              {% if p.category %}<span>#{{ p.category }}</span>{% endif %}
+              {% if p.is_featured %}<span class="ml-2">• Featured</span>{% endif %}
+            </div>
+            <div class="mt-1 font-semibold text-black">Rp{{ p.price }}</div>
+
+            <div class="mt-4 flex items-center justify-end gap-4">
+              <a href="{% url 'main:edit_product' p.pk %}" class="text-[#79B84C] hover:underline">edit</a>
+              <form method="post" action="{% url 'main:delete_product' p.pk %}">
+                {% csrf_token %}
+                <button class="text-[#79B84C] hover:underline" onclick="return confirm('Hapus produk ini?')">delete</button>
+              </form>
+            </div>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  {% endif %}
+</div>
+{% endblock %}

@@ -162,3 +162,36 @@ Answer :
 > Test server di lokal dengan buat 2 akun dan masing-masing diisi dengan 3 dummy product dan cek apakah setiap produk sesuai dengan ownernya (user yang sedang login).
 
 
+=============================================================================================================
+Tugas 5 
+
+Jika terdapat beberapa CSS selector untuk suatu elemen HTML, jelaskan urutan prioritas pengambilan CSS selector tersebut!
+
+Answer : Jika ada beberapa CSS selector maka browser akan menentukan urutan prioritasnya melalui specificity (semakin spesifik selector, semakin tinggi prioritasnya). Untuk tingkat prioritas tertinggi dimiliki oleh inline style, dibawahnya ada selector ID, lalu class/pseudo-class/attribute dan di urutan paling rendah ada element. Kalau tingkat specificity nya sama, yang akan ditulis adalah yang terakhir digunakan.
+
+
+
+Mengapa responsive design menjadi konsep yang penting dalam pengembangan aplikasi web? Berikan contoh aplikasi yang sudah dan belum menerapkan responsive design, serta jelaskan mengapa!
+
+Answer : Responsive design penting karena akan memengaruhi pengalaman user, dengan menyesuaikan tampilan web di berbagai layar seperti desktop/mobile. Contoh aplikasi yang belum menerapkan responsive design adalah instagram, instagram kalau dibuka di layar yang cukup lebar seperti laptop/tablet(horizontal) tampilannya akan vertikal persis seperti di mobile dan di sisi kanan dan kiri nya akan ada space hitam. Aplikasi yang sudah menerapkan responsive design adalah google docs, ketika dibuka di mobile pun tampilannya tetap rapih (tidak ada fitur yang tertumpuk)
+
+
+
+Jelaskan perbedaan antara margin, border, dan padding, serta cara untuk mengimplementasikan ketiga hal tersebut!
+
+Answer : Margin, border dan padding adalah konsep-konsep box model di CSS. Masing-masing memiliki fungsi sebagai berikut :
+Margin berfungsi untuk memberi jarak antar elemen
+Border memberikan garis pembatas di sekeliling elemen
+Padding memberi jarak antara konten dengan batas elemen
+
+
+Jelaskan konsep flex box dan grid layout beserta kegunaannya!
+
+Answer : Flex box dan grid layout adalah sistem tata letak di CSS. Flex box digunakan untuk mengatur elemen 1 dimensi seperti baris atau kolom agar menjadi lebih fleksibel dan desainnya lebih responsif. Sementara grid layout digunakan untuk mengatur tata letak elemen 2 dimensi (baris dan kolom), cocok untuk desain halaman yang lebih kompleks.
+
+
+Jelaskan bagaimana cara kamu mengimplementasikan checklist di atas secara step-by-step (bukan hanya sekadar mengikuti tutorial)!
+
+Answer : 
+
+

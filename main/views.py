@@ -8,10 +8,17 @@ from django.utils import timezone
 from django.http import HttpResponseRedirect
 from django.urls import reverse
 from django.contrib import messages
+from django.shortcuts import redirect
+from django.db.models import Q
 
 
 from .models import Product
 from .forms import ProductForm
+
+def home_redirect(request):
+    if request.user.is_authenticated:
+        return redirect('main:product_list')
+    return redirect('main:login')
 
 def show_main(request):
     context = {
@@ -44,7 +51,7 @@ def login_user(request):
 
 def logout_user(request):
     logout(request)
-    resp = redirect("main:show_main")
+    resp = redirect("main:login")
     resp.delete_cookie("last_login")
     return resp
 
@@ -122,8 +129,19 @@ def delete_product(request, pk):
 
 @login_required
 def product_filter_by_category(request):
-    category = request.GET.get('category', '').strip()
-    products = Product.objects.filter(owner=request.user)               # per-user
-    if category:
-        products = products.filter(category__iexact=category)
-    return render(request, "product_list.html", {"products": products, "active_category": category})
+    raw = request.GET.get('category', '').strip()
+    products = Product.objects.filter(owner=request.user)
+
+    if raw:
+        cats = [c.strip() for c in raw.split(',') if c.strip()]
+        if cats:
+            q = Q()
+            for c in cats:
+                q |= Q(category__iexact=c)  
+            products = products.filter(q)
+
+    return render(
+        request,
+        "product_list.html",
+        {"products": products, "active_category": raw}
+    )
