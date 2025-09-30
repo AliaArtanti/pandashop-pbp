@@ -193,5 +193,10 @@ Answer : Flex box dan grid layout adalah sistem tata letak di CSS. Flex box digu
 Jelaskan bagaimana cara kamu mengimplementasikan checklist di atas secara step-by-step (bukan hanya sekadar mengikuti tutorial)!
 
 Answer : 
+> Tambahkan url untuk edit_products dan delete_products di urls.py lalu buat view edit_products (GET tampilkan ProductForm, POST form.save()) dan delete_product (POST hapus dengan get_object_or_404, dibatasi owner=request.user) di views.py. 
+
+> Activate tailwind via CDN di templates>base.html lalu memilih warna-warna yang sesuai dengan tema website.
+
+> Di login.html, register.html, product_form.html, product_list dan product_detail dibuat kustomisasi untuk panel, tulisan nama toko dan alert terkait autentikasi dengan tailwind mengikuti color pallete yang sesuai dengan tema.
 
 
