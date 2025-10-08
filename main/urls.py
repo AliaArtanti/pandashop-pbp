@@ -25,4 +25,12 @@ urlpatterns = [
     path("products/<int:pk>/edit/", views.edit_product, name="edit_product"),
     path("products/<int:pk>/delete/", views.delete_product, name="delete_product"),
     path('products/filter/', views.product_filter_by_category, name='product_filter'),
+
+    # Route AJAX / API 
+    path('api/products/', views.api_products_list_create, name='api_products'),
+    path('api/products/<int:pk>/', views.api_products_detail_update_delete, name='api_products_detail'),
+    path('api/auth/register/', views.api_register, name='api_register'),
+    path('api/auth/login/', views.api_login, name='api_login'),
+    path('api/auth/logout/', views.api_logout, name='api_logout'),
+
 ]

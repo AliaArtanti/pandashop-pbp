@@ -1,21 +1,24 @@
-{% extends 'main.html' %}
+{% extends 'base.html' %}
 
 {% block meta %}<title>Login - Panda Shop</title>{% endblock meta %}
+{% block body_class %}auth-bg{% endblock %}
+
 
 {% block content %}
 <div class="w-full min-h-screen flex items-center justify-center p-6">
-  <div class="max-w-xl w-full rounded-2xl shadow-lg" style="background:var(--green);">
+  <div class="max-w-xl w-full auth-card">
     <div class="p-8 md:p-10 text-center text-white">
       <h2 class="text-2xl md:text-3xl font-semibold mb-1 text-[var(--cream-dim)]">Selamat Datang di</h2>
       <div class="text-3xl md:text-4xl font-extrabold mb-6 flex items-center justify-center gap-2">
-  <div>
-    <span class="text-black">Panda</span>
-    <span class="text-white">Shop</span>
-  </div>
-  <span class="text-4xl" aria-hidden="true">🐼</span>
-</div>
+        <div>
+          <span class="text-black">Panda</span>
+          <span class="text-white">Shop</span>
+        </div>
+        <span class="text-4xl" aria-hidden="true">🐼</span>
+      </div>
       <h3 class="text-2xl md:text-3xl mb-6 text-[var(--cream-dim)]">Sign In</h3>
 
+      {# fallback error (kalau JS mati) #}
       {% if form.non_field_errors %}
         <div class="mb-4">
           {% for error in form.non_field_errors %}
@@ -37,23 +40,20 @@
         </div>
       {% endif %}
 
-      <form method="POST" action="" class="text-left space-y-5">
+      <form id="login-form" method="POST" action="" class="text-left space-y-5">
         {% csrf_token %}
-
         <div>
           <label for="username" class="block text-sm font-medium text-white mb-2">username</label>
           <input id="username" name="username" type="text" required
-            class="auth-input w-full rounded-md px-4 py-2"
-            placeholder="Enter your username">
+                 class="auth-input w-full rounded-md px-4 py-2"
+                 placeholder="Enter your username">
         </div>
-
         <div>
           <label for="password" class="block text-sm font-medium text-white mb-2">Password</label>
           <input id="password" name="password" type="password" required
-            class="auth-input w-full rounded-md px-4 py-2"
-            placeholder="Enter your password">
+                 class="auth-input w-full rounded-md px-4 py-2"
+                 placeholder="Enter your password">
         </div>
-
         <button type="submit"
           class="w-full bg-white text-[var(--green)] font-semibold py-2.5 rounded-md hover:opacity-90">
           Login
@@ -74,4 +74,9 @@
     </div>
   </div>
 </div>
-{% endblock content %}
+{% endblock %}
+
+{% block extra_js %}
+  {% load static %}
+  <script type="module" src="{% static 'js/auth.js' %}"></script>
+{% endblock %}

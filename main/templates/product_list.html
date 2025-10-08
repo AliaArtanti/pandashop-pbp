@@ -1,82 +1,48 @@
-{% extends "main.html" %}
+{% extends "base.html" %}
 {% load static %}
 
 {% block content %}
-{% include 'navbar.html' %}
-
 <div class="mx-auto max-w-6xl px-4 py-6">
 
+  <!-- Filter form (AJAX) -->
+  <form id="filter-form" method="get"
+        class="bg-white border rounded-lg p-4 mb-6 flex flex-col sm:flex-row gap-3 sm:items-center">
+    <input type="text" name="category" placeholder="Cari kategori…"
+           class="flex-1 border rounded-md px-3 py-2">
+    <div class="flex gap-2">
+      <button type="submit" class="border px-4 py-2 rounded-md bg-white">Filter</button>
+      <a href="#" id="filter-clear" class="border px-4 py-2 rounded-md bg-white">Clear</a>
+    </div>
+  </form>
+
+  <!-- Info data delivery -->
   <div class="text-center text-gray-700 text-sm mb-3">
     Data Delivery:
     <a href="{% url 'main:products_json' %}" class="underline hover:no-underline">JSON</a> |
     <a href="{% url 'main:products_xml' %}" class="underline hover:no-underline">XML</a>
   </div>
 
-  <!-- Filter -->
-  <form method="get" action="{% url 'main:product_filter' %}"
-        class="bg-white border rounded-lg p-4 mb-6 flex flex-col sm:flex-row gap-3 sm:items-center">
-    <input type="text" name="category" value="{{ active_category }}" placeholder="Cari kategori…"
-           class="flex-1 border rounded-md px-3 py-2">
+  <!-- Header + actions (Refresh) -->
+  <div class="flex items-center justify-between mb-4">
+    <h1 class="text-xl font-semibold text-black">Produk Saya</h1>
     <div class="flex gap-2">
-      <button type="submit" class="border px-4 py-2 rounded-md bg-white">Filter</button>
-      {% if active_category %}
-        <a href="{% url 'main:product_list' %}" class="border px-4 py-2 rounded-md bg-white">Clear</a>
-      {% endif %}
+      <button id="btn-refresh" class="px-3 py-2 rounded border">Refresh</button>
     </div>
-  </form>
+  </div>
 
-  {% if active_category %}
-    <p class="text-sm text-gray-600 mb-4"><i>Filtered by category: <b>{{ active_category }}</b></i></p>
-  {% endif %}
+  <!-- States -->
+  <p id="state-loading" class="text-gray-500 hidden">Loading…</p>
+  <p id="state-error" class="text-red-600 hidden"></p>
+  <p id="state-empty" class="text-gray-500 hidden">Belum ada produk.</p>
 
-  {% if products|length == 0 %}
-    
-    <div class="bg-white rounded-xl border p-12 text-center">
-      <div class="w-32 h-32 mx-auto mb-4">
-        <img src="{% static 'image/panda.png' %}" alt="No products" class="w-full h-full object-contain">
-      </div>
-      <h3 class="text-lg font-medium text-gray-900 mb-2">Belum ada produk.</h3>
-      <p class="text-gray-500">Tambahkan produk pertamamu sekarang!</p>
-    </div>
-   
-    <div class="text-center mt-6">
-      <a href="{% url 'main:add_product' %}"
-         class="inline-block bg-[#79B84C] text-white px-5 py-2.5 rounded-md hover:opacity-90">
-        Tambah Produk
-      </a>
-    </div>
-  {% else %}
-    <!-- GRID CARD  -->
-    <div class="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
-      {% for p in products %}
-        <div class="border-2 border-black rounded-md overflow-hidden">
-          <a href="{% url 'main:product_detail' p.pk %}" class="block">
-            <img src="{% if p.thumbnail %}{{ p.thumbnail }}{% else %}{% static 'image/no-product.png' %}{% endif %}"
-                 alt="" class="w-full h-44 object-cover bg-white">
-          </a>
-
-          <div class="bg-white border-t-2 border-black p-3">
-            <h2 class="font-semibold text-lg text-black">{{ p.name }}</h2>
-            {% if p.description %}
-              <p class="text-sm text-black/80 mt-1">{{ p.description }}</p>
-            {% endif %}
-            <div class="mt-1 text-sm text-black">
-              {% if p.category %}<span>#{{ p.category }}</span>{% endif %}
-              {% if p.is_featured %}<span class="ml-2">• Featured</span>{% endif %}
-            </div>
-            <div class="mt-1 font-semibold text-black">Rp{{ p.price }}</div>
-
-            <div class="mt-4 flex items-center justify-end gap-4">
-              <a href="{% url 'main:edit_product' p.pk %}" class="text-[#79B84C] hover:underline">edit</a>
-              <form method="post" action="{% url 'main:delete_product' p.pk %}">
-                {% csrf_token %}
-                <button class="text-[#79B84C] hover:underline" onclick="return confirm('Hapus produk ini?')">delete</button>
-              </form>
-            </div>
-          </div>
-        </div>
-      {% endfor %}
-    </div>
-  {% endif %}
+  <!-- AJAX list target -->
+  <div id="product-list" class="grid gap-8 sm:grid-cols-2 lg:grid-cols-3"></div>
 </div>
+{% endblock %}
+
+{% block extra_js %}
+  <!-- Toast global HARUS lebih dulu -->
+  <script src="{% static 'js/toast.js' %}"></script>
+  <!-- Script utama -->
+  <script src="{% static 'js/products.js' %}"></script>
 {% endblock %}

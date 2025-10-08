@@ -4,11 +4,25 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    {% block meta %} {% endblock meta %}
+    {% block meta %}{% endblock meta %}
     <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="{% static 'css/global.css' %}"/>
+    <link rel="stylesheet" href="{% static 'css/global.css' %}">
   </head>
-  <body>
-    {% block content %} {% endblock content %}
+
+
+  <body class="{% block body_class %}bg-gray-50{% endblock %}">
+    {% if request.user.is_authenticated %}
+      {% include 'navbar.html' %}
+    {% endif %}
+
+    <main class="container mx-auto px-4 py-6">
+      {% block content %}{% endblock content %}
+    </main>
+
+    <!-- Toast & Modal roots (dipakai semua halaman) -->
+    <div id="toast-stack" aria-live="polite" aria-atomic="true"></div>
+    <div id="modal-root"></div>
+
+    {% block extra_js %}{% endblock %}
   </body>
 </html>

@@ -200,3 +200,32 @@ Answer :
 > Di login.html, register.html, product_form.html, product_list dan product_detail dibuat kustomisasi untuk panel, tulisan nama toko dan alert terkait autentikasi dengan tailwind mengikuti color pallete yang sesuai dengan tema.
 
 
+===============================================================================================================
+
+Tugas 6 
+
+Apa perbedaan antara synchronous request dan asynchronous request?
+	
+	Answer: Synchronous request = setiap request yang dikirim ke server harus menunggu response dulu sebelum proses lain bisa dilanjutkan. Akibatnya, halaman web akan berhenti sementara sampai server mengembalikan data. Asynchronous request = browser dapat melanjutkan proses lain tanpa harus menunggu response dari server. 
+
+
+ Bagaimana AJAX bekerja di Django (alur request–response)?
+
+	Answer: Dalam Django, AJAX bekerja dengan cara JavaScript di sisi klien mengirimkan request ke server menggunakan fetch(), lalu django menerima request tersebut melalui url yang mengarah ke view tertentu untuk memproses data dan mengembalikan response dalam format JSON. Dilanjut dengan JavaScript menerima JSON response tersebut dan update elemen HTML di halaman tanpa melakukan full reload. 
+
+
+Apa keuntungan menggunakan AJAX dibandingkan render biasa di Django?
+
+	Answer: Keuntungan utama AJAX adalah efisiensi dan interaktivitas. Jika pakai AJAX user tidak perlu reload seluruh halaman setiap kali ada perubahan data (cukup bagian tertentu yang diupdate). Hal ini mengurangi waktu loading, menghemat bandwidth, dan membuat web terasa lebih “real time”.
+
+
+ Bagaimana cara memastikan keamanan saat menggunakan AJAX untuk fitur Login dan Register di Django?
+
+	Answer: Keamanan AJAX di Django dapat dijaga dengan menyertakan CSRF token dalam setiap AJAX POST request, karena Django secara default memeriksa token ini. Dengan CSRF kita dapat memastikan semua request yang dikirim bersifat aman (terverifikasi) sehingga dapat mencegah serangan cyber seperti  cross site request forgery. Selain itu, pastikan data dikirim melalui HTTPS, validasi input di sisi server juga tetap dilakukan (jangan hanya di JavaScript), dan hindari menampilkan pesan error yang terlalu detail agar tidak membocorkan informasi sensitif.
+
+
+
+Bagaimana AJAX mempengaruhi pengalaman pengguna (User Experience) pada website?
+
+ Answer: AJAX meningkatkan user experience secara signifikan karena membuat interaksi dengan website terasa cepat, responsif, dan real time. User bisa melakukan aksi seperti mengirim formulir, memfilter data, atau merefresh konten tanpa kehilangan konteks halaman. Hal ini memberikan kesan modern dan efisien, mirip dengan aplikasi desktop. Misalnya, ketika pengguna menambahkan item ke keranjang belanja dan jumlah langsung bertambah tanpa reload halaman.
+

@@ -1,0 +1,78 @@
+/* === Theme Variables (Panda Shop) === */
+:root{
+  --green: #79B84C;     
+  --cream: #F7F3E9;     
+  --cream-dim: #E9F3D8; 
+}
+
+/* Base font */
+body{
+  font-family: 'Inter', system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+}
+
+/* === Auth form look === */
+.auth-input{
+  background: transparent;
+  border: 2px solid rgba(255,255,255,0.55);
+  color: #fff;
+  outline: none;
+  transition: .2s ease;
+}
+.auth-input::placeholder{ color: rgba(255,255,255,0.8); }
+.auth-input:focus{
+  border-color: #fff;
+  box-shadow: 0 0 0 3px rgba(255,255,255,0.25);
+}
+
+/* Kartu auth hijau */
+.auth-card{
+  background: var(--green);
+  border-radius: 1rem;
+  box-shadow: 0 15px 40px rgba(0,0,0,.15);
+}
+
+.auth-bg {
+  background: var(--cream) !important;
+}
+
+
+/* === TOAST STYLES === */
+#toast-stack{
+  position: fixed;
+  right: 1rem;
+  bottom: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  z-index: 10000;
+}
+.toast{
+  padding: 10px 14px;
+  border-radius: 10px;
+  color: white;
+  background: #333;
+  opacity: 0.95;
+  transition: 0.3s ease;
+  box-shadow: 0 3px 10px rgba(0,0,0,0.2);
+}
+.toast.success { background: #16a34a; }
+.toast.error   { background: #dc2626; }
+.toast.info    { background: #2563eb; }
+
+/* === MODAL (create/update & konfirmasi delete) === */
+#modal-root .backdrop{
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,.35);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+}
+#modal-root .modal{
+  background: #fff;
+  border-radius: 12px;
+  padding: 16px;
+  max-width: 480px;
+  width: 100%;
+}
